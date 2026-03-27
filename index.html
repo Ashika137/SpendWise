@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>SpendWise — Expense Tracker</title>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+<div class="app">
+
+  <!-- HEADER -->
+  <header>
+    <div>
+      <div class="logo">Spend<span>Wise</span></div>
+      <div class="tagline">Track smarter. Spend wiser.</div>
+    </div>
+    <div class="live-clock" id="live-clock">--:--:--</div>
+  </header>
+
+  <!-- STATS ROW -->
+  <div class="stats-row">
+    <div class="stat-card" id="card-total">
+      <div class="stat-label">Total Spent</div>
+      <div class="stat-value red" id="stat-total">$0.00</div>
+    </div>
+    <div class="stat-card" id="card-remaining">
+      <div class="stat-label">Remaining</div>
+      <div class="stat-value green" id="stat-remaining">$0.00</div>
+    </div>
+    <div class="stat-card" id="card-txns">
+      <div class="stat-label">Transactions</div>
+      <div class="stat-value" id="stat-txns">0</div>
+    </div>
+  </div>
+
+  <!-- REAL-TIME INSIGHTS ROW -->
+  <div class="insights-row">
+    <div class="insight-card">
+      <div class="insight-label">📅 Day of Month</div>
+      <div class="insight-value" id="insight-day">—</div>
+    </div>
+    <div class="insight-card">
+      <div class="insight-label">📈 Avg / Day</div>
+      <div class="insight-value" id="insight-daily">$0.00</div>
+    </div>
+    <div class="insight-card">
+      <div class="insight-label">🔮 Month Projection</div>
+      <div class="insight-value" id="insight-projection">$0.00</div>
+    </div>
+    <div class="insight-card">
+      <div class="insight-label">📆 Days Left</div>
+      <div class="insight-value" id="insight-daysleft">—</div>
+    </div>
+  </div>
+
+  <!-- BUDGET SECTION -->
+  <div class="budget-section">
+    <div class="budget-header">
+      <div class="budget-label">Monthly Budget</div>
+      <div class="budget-edit">
+        <div class="budget-input-wrap">
+          <span>$</span>
+          <input type="number" id="budget-input" value="1000" min="1" step="50"/>
+        </div>
+      </div>
+    </div>
+    <div class="bar-track">
+      <div class="bar-fill" id="budget-bar" style="width:0%"></div>
+    </div>
+    <div class="budget-status ok" id="budget-status">No expenses yet — budget intact.</div>
+  </div>
+
+  <!-- ALERT BANNERS -->
+  <div class="alert warning-alert" id="alert-warning">
+    <span class="alert-icon">⚠️</span>
+    <span id="alert-warning-text">You've used 80% of your monthly budget.</span>
+  </div>
+  <div class="alert danger-alert" id="alert-danger">
+    <span class="alert-icon">🚨</span>
+    <span id="alert-danger-text">Budget exceeded! You're over your monthly limit.</span>
+  </div>
+
+  <!-- CHART SECTION -->
+  <div class="chart-section">
+    <div class="chart-title">Spending by <span>Category</span></div>
+    <div class="chart-body">
+      <canvas id="cat-chart" width="220" height="220"></canvas>
+      <div class="chart-legend" id="chart-legend"></div>
+    </div>
+    <div class="no-data-msg" id="no-data-msg">Add expenses to see your spending breakdown.</div>
+  </div>
+
+  <!-- ADD EXPENSE FORM -->
+  <div class="add-form">
+    <div class="form-title">+ Add <span>Expense</span></div>
+    <div class="form-grid">
+      <div class="field">
+        <label>Description</label>
+        <input type="text" id="inp-desc" placeholder="e.g. Grocery run"/>
+      </div>
+      <div class="field">
+        <label>Amount ($)</label>
+        <input type="number" id="inp-amount" placeholder="0.00" min="0.01" step="0.01"/>
+      </div>
+      <div class="field">
+        <label>Category</label>
+        <select id="inp-cat">
+          <option value="food">🍔 Food</option>
+          <option value="transport">🚗 Transport</option>
+          <option value="shopping">🛍️ Shopping</option>
+          <option value="health">💊 Health</option>
+          <option value="entertainment">🎮 Entertainment</option>
+          <option value="utilities">⚡ Utilities</option>
+          <option value="other">📦 Other</option>
+        </select>
+      </div>
+      <button class="btn-add" onclick="addExpense()">Add</button>
+    </div>
+  </div>
+
+  <!-- EXPENSE LIST -->
+  <div class="list-header">
+    <div class="list-title">Expenses</div>
+    <div class="expense-count" id="count-badge">0 items</div>
+  </div>
+  <div class="expense-list" id="expense-list">
+    <div class="empty-state">
+      <div class="icon">💸</div>
+      No expenses yet. Add one above!
+    </div>
+  </div>
+
+  <footer>SpendWise &nbsp;·&nbsp; Built with HTML / CSS / JS</footer>
+
+</div><!-- end .app -->
+
+<script src="script.js"></script>
+</body>
+</html>

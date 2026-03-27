@@ -1,0 +1,556 @@
+/* ============================================================
+   SPENDWISE — style.css
+   All visual styling for the expense tracker app
+   ============================================================ */
+
+/* ---------- CSS VARIABLES (theme colours & sizes) ---------- */
+:root {
+  --bg:      #a3b5de;
+  --surface: #161920;
+  --surface2:#1e222d;
+  --border:  #2a2f3d;
+  --accent:  #d4f57a;
+  --accent2: #7affb8;
+  --danger:  #ff6b6b;
+  --warning: #ffd166;
+  --text:    #e8eaf0;
+  --muted:   #6b7280;
+  --radius:  14px;
+}
+
+/* ---------- RESET ---------- */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* ---------- BODY ---------- */
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'DM Mono', monospace;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* subtle background glow */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image:
+    radial-gradient(ellipse 80% 50% at 10% 0%,  rgba(212,245,122,0.07) 0%, transparent 60%),
+    radial-gradient(ellipse 60% 40% at 90% 100%, rgba(122,255,184,0.05) 0%, transparent 60%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ---------- APP WRAPPER ---------- */
+.app {
+  position: relative;
+  z-index: 1;
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 48px 24px 80px;
+}
+
+/* ============================================================
+   HEADER
+   ============================================================ */
+header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  margin-bottom: 40px;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.logo {
+  font-family: 'Syne', sans-serif;
+  font-weight: 800;
+  font-size: 2.4rem;
+  letter-spacing: -1px;
+  line-height: 1;
+}
+.logo span { color: var(--accent); }
+
+.tagline {
+  font-size: 0.75rem;
+  color: var(--muted);
+  margin-top: 4px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+/* live clock displayed in the top-right corner */
+.live-clock {
+  font-family: 'Syne', sans-serif;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--accent);
+  letter-spacing: 0.04em;
+  opacity: 0.85;
+}
+
+/* ============================================================
+   STATS ROW  (Total Spent / Remaining / Transactions)
+   ============================================================ */
+.stats-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.stat-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 20px 22px;
+  position: relative;
+  overflow: hidden;
+  transition: border-color 0.2s;
+}
+
+/* coloured top bar on each card */
+.stat-card::after {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: var(--accent);
+  opacity: 0.4;
+}
+.stat-card.danger::after  { background: var(--danger);  opacity: 1; }
+.stat-card.warning::after { background: var(--warning); opacity: 1; }
+.stat-card.safe::after    { background: var(--accent2); opacity: 1; }
+
+.stat-label {
+  font-size: 0.65rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--muted);
+  margin-bottom: 8px;
+}
+
+.stat-value {
+  font-family: 'Syne', sans-serif;
+  font-size: 1.9rem;
+  font-weight: 700;
+  line-height: 1;
+}
+.stat-value.red    { color: var(--danger);  }
+.stat-value.green  { color: var(--accent2); }
+.stat-value.yellow { color: var(--warning); }
+
+/* ============================================================
+   REAL-TIME INSIGHTS ROW
+   (Day of Month / Avg per Day / Projection / Days Left)
+   ============================================================ */
+.insights-row {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+  margin-bottom: 32px;
+}
+
+.insight-card {
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 14px 16px;
+  text-align: center;
+}
+
+.insight-label {
+  font-size: 0.62rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--muted);
+  margin-bottom: 6px;
+}
+
+.insight-value {
+  font-family: 'Syne', sans-serif;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--accent);
+}
+
+/* ============================================================
+   BUDGET SECTION
+   ============================================================ */
+.budget-section {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 20px 22px;
+  margin-bottom: 24px;
+}
+
+.budget-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 14px;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.budget-label {
+  font-family: 'Syne', sans-serif;
+  font-weight: 600;
+  font-size: 0.9rem;
+  letter-spacing: 0.03em;
+}
+
+.budget-input-wrap {
+  display: flex;
+  align-items: center;
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  overflow: hidden;
+}
+.budget-input-wrap span {
+  padding: 6px 10px;
+  color: var(--muted);
+  font-size: 0.85rem;
+}
+.budget-input-wrap input {
+  background: none;
+  border: none;
+  outline: none;
+  color: var(--text);
+  font-family: 'DM Mono', monospace;
+  font-size: 0.85rem;
+  width: 90px;
+  padding: 6px 8px 6px 0;
+}
+
+/* progress bar */
+.bar-track {
+  height: 8px;
+  background: var(--surface2);
+  border-radius: 99px;
+  overflow: hidden;
+}
+.bar-fill {
+  height: 100%;
+  border-radius: 99px;
+  background: var(--accent2);
+  transition: width 0.5s cubic-bezier(.4,0,.2,1), background 0.3s;
+}
+
+.budget-status {
+  font-size: 0.7rem;
+  color: var(--muted);
+  margin-top: 8px;
+}
+.budget-status.over { color: var(--danger);  }
+.budget-status.near { color: var(--warning); }
+.budget-status.ok   { color: var(--accent2); }
+
+/* ============================================================
+   ALERT BANNERS
+   ============================================================ */
+.alert {
+  display: none;
+  align-items: center;
+  gap: 12px;
+  border-radius: var(--radius);
+  padding: 14px 18px;
+  margin-bottom: 24px;
+  font-size: 0.8rem;
+  animation: slideIn 0.3s ease;
+}
+.alert.show { display: flex; }
+
+.alert.warning-alert {
+  background: rgba(255,209,102,0.1);
+  border: 1px solid rgba(255,209,102,0.3);
+  color: var(--warning);
+}
+.alert.danger-alert {
+  background: rgba(255,107,107,0.1);
+  border: 1px solid rgba(255,107,107,0.3);
+  color: var(--danger);
+}
+
+.alert-icon { font-size: 1.2rem; }
+
+@keyframes slideIn {
+  from { opacity: 0; transform: translateY(-8px); }
+  to   { opacity: 1; transform: translateY(0);    }
+}
+
+/* ============================================================
+   CHART SECTION  (Doughnut chart — spending by category)
+   ============================================================ */
+.chart-section {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 22px 24px;
+  margin-bottom: 32px;
+}
+
+.chart-title {
+  font-family: 'Syne', sans-serif;
+  font-weight: 700;
+  font-size: 0.95rem;
+  margin-bottom: 18px;
+}
+.chart-title span { color: var(--accent); }
+
+.chart-body {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+  flex-wrap: wrap;
+}
+
+canvas#cat-chart { flex-shrink: 0; }
+
+/* legend items next to the chart */
+.chart-legend {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  flex: 1;
+  min-width: 140px;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.75rem;
+}
+
+.legend-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.legend-label { color: var(--text); flex: 1; }
+.legend-pct   { color: var(--muted); font-size: 0.7rem; }
+
+.no-data-msg {
+  font-size: 0.75rem;
+  color: var(--muted);
+  text-align: center;
+  padding: 12px 0 4px;
+}
+
+/* ============================================================
+   ADD EXPENSE FORM
+   ============================================================ */
+.add-form {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 24px;
+  margin-bottom: 32px;
+}
+
+.form-title {
+  font-family: 'Syne', sans-serif;
+  font-weight: 700;
+  font-size: 0.95rem;
+  margin-bottom: 18px;
+  letter-spacing: 0.03em;
+}
+.form-title span { color: var(--accent); }
+
+.form-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr auto;
+  gap: 12px;
+  align-items: end;
+}
+
+.field { display: flex; flex-direction: column; gap: 6px; }
+
+.field label {
+  font-size: 0.65rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--muted);
+}
+
+.field input,
+.field select {
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: 9px;
+  color: var(--text);
+  font-family: 'DM Mono', monospace;
+  font-size: 0.85rem;
+  padding: 10px 14px;
+  outline: none;
+  transition: border-color 0.2s;
+  width: 100%;
+  appearance: none;
+}
+
+.field input::placeholder { color: var(--muted); }
+.field input:focus,
+.field select:focus { border-color: var(--accent); }
+.field select option { background: var(--surface2); }
+
+.btn-add {
+  background: var(--accent);
+  color: #0d0f14;
+  border: none;
+  border-radius: 9px;
+  font-family: 'Syne', sans-serif;
+  font-weight: 700;
+  font-size: 0.85rem;
+  padding: 10px 20px;
+  cursor: pointer;
+  white-space: nowrap;
+  letter-spacing: 0.03em;
+  transition: opacity 0.2s, transform 0.1s;
+  align-self: end;
+}
+.btn-add:hover  { opacity: 0.9; }
+.btn-add:active { transform: scale(0.97); }
+
+/* ============================================================
+   EXPENSE LIST
+   ============================================================ */
+.list-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.list-title {
+  font-family: 'Syne', sans-serif;
+  font-weight: 700;
+  font-size: 0.95rem;
+}
+
+.expense-count {
+  font-size: 0.7rem;
+  color: var(--muted);
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: 99px;
+  padding: 3px 10px;
+}
+
+.expense-list { display: flex; flex-direction: column; gap: 10px; }
+
+.expense-item {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 14px 18px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  animation: itemIn 0.25s ease;
+  transition: border-color 0.2s;
+}
+.expense-item:hover { border-color: #3a4055; }
+
+@keyframes itemIn {
+  from { opacity: 0; transform: translateX(-12px); }
+  to   { opacity: 1; transform: translateX(0);     }
+}
+
+.cat-dot {
+  width: 36px;
+  height: 36px;
+  border-radius: 9px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.1rem;
+  flex-shrink: 0;
+}
+
+.expense-info { flex: 1; min-width: 0; }
+
+.expense-name {
+  font-size: 0.88rem;
+  font-weight: 500;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.expense-meta {
+  font-size: 0.7rem;
+  color: var(--muted);
+  margin-top: 2px;
+}
+
+.expense-amount {
+  font-family: 'Syne', sans-serif;
+  font-weight: 700;
+  font-size: 1rem;
+  color: var(--danger);
+  white-space: nowrap;
+}
+
+.btn-delete {
+  background: none;
+  border: 1px solid var(--border);
+  border-radius: 7px;
+  color: var(--muted);
+  cursor: pointer;
+  font-size: 0.8rem;
+  padding: 5px 9px;
+  transition: background 0.2s, color 0.2s, border-color 0.2s;
+}
+.btn-delete:hover {
+  background: rgba(255,107,107,0.1);
+  border-color: var(--danger);
+  color: var(--danger);
+}
+
+/* ============================================================
+   EMPTY STATE
+   ============================================================ */
+.empty-state {
+  text-align: center;
+  padding: 48px 24px;
+  color: var(--muted);
+  font-size: 0.8rem;
+}
+.empty-state .icon {
+  font-size: 2.5rem;
+  margin-bottom: 12px;
+  opacity: 0.4;
+}
+
+/* ============================================================
+   FOOTER
+   ============================================================ */
+footer {
+  text-align: center;
+  margin-top: 64px;
+  font-size: 0.65rem;
+  color: var(--muted);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+/* ============================================================
+   RESPONSIVE — mobile adjustments
+   ============================================================ */
+@media (max-width: 640px) {
+  .stats-row    { grid-template-columns: repeat(2, 1fr); }
+  .insights-row { grid-template-columns: repeat(2, 1fr); }
+  .form-grid    { grid-template-columns: 1fr 1fr; }
+  .btn-add      { grid-column: span 2; }
+  .live-clock   { font-size: 1.1rem; }
+}
