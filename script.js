@@ -5,7 +5,7 @@
 
 /* ---------- CATEGORY DEFINITIONS ---------- */
 const CATEGORIES = {
-  food:          { emoji: '🍔', color: '#ffd166', bg: 'rgba(255,209,102,0.15)', label: 'Food' },
+  food:          { emoji: '🍞', color: '#ffd166', bg: 'rgba(255,209,102,0.15)', label: 'Food' },
   transport:     { emoji: '🚗', color: '#7affb8', bg: 'rgba(122,255,184,0.15)', label: 'Transport' },
   shopping:      { emoji: '🛍️', color: '#c084fc', bg: 'rgba(192,132,252,0.15)', label: 'Shopping' },
   health:        { emoji: '💊', color: '#f87171', bg: 'rgba(248,113,113,0.15)', label: 'Health' },
